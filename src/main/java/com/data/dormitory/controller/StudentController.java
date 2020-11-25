@@ -1,0 +1,48 @@
+package com.data.dormitory.controller;
+
+import com.data.dormitory.mbg.model.TestLogin;
+import com.data.dormitory.service.StudentService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/studentController")
+@Api(tags = "StudentController", description = "学生信息")
+public class StudentController {
+
+    private static Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
+
+    @Autowired
+    private StudentService studentService;
+
+    /**
+     * 根据id获取用户
+     */
+    @ApiOperation("根据学号获取学生")
+    @RequestMapping(value = "/getUserById", method = RequestMethod.GET)
+    public TestLogin getUser(@RequestParam("userId") Integer userId) {
+
+        LOGGER.info("getUser() 调用");
+        return studentService.getUserById(userId);
+    }
+
+    /**
+     * 验证用户登录
+     */
+    @ApiOperation("验证学生登录")
+    @RequestMapping(value = "/getLogin", method = RequestMethod.GET)
+    public boolean getLogin(@RequestParam("userId") Integer userId,
+                            @RequestParam("passwd") String passwd) {
+
+        LOGGER.info("getLogin() 调用");
+        return studentService.getLogin(userId, passwd);
+    }
+
+}
