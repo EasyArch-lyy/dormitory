@@ -14,7 +14,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-
+/**
+ * 日志记录
+ *
+ */
 public class MaxDailyRollingFileAppender extends DailyRollingFileAppender {
 
     protected int maxBackupIndex = 1;
