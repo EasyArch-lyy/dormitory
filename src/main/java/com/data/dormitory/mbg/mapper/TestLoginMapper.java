@@ -3,8 +3,10 @@ package com.data.dormitory.mbg.mapper;
 import com.data.dormitory.mbg.model.TestLogin;
 import com.data.dormitory.mbg.model.TestLoginExample;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 import java.util.List;
 
+@Repository("testLoginMapper")
 public interface TestLoginMapper {
     int countByExample(TestLoginExample example);
 

@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.data.dormitory.mbg.mapper.LeaveMapper">
+  <resultMap id="BaseResultMap" type="com.data.dormitory.mbg.model.Leave">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="bid" jdbcType="TINYINT" property="bid" />
+    <result column="did" jdbcType="TINYINT" property="did" />
+    <result column="bbid" jdbcType="BIT" property="bbid" />
+    <result column="kind" jdbcType="BIT" property="kind" />
+    <result column="begindate" jdbcType="TIMESTAMP" property="begindate" />
+    <result column="overdate" jdbcType="TIMESTAMP" property="overdate" />
+    <result column="uid" jdbcType="CHAR" property="uid" />
+    <result column="reviewstate" jdbcType="BIT" property="reviewstate" />
+    <result column="descript" jdbcType="VARCHAR" property="descript" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, bid, did, bbid, kind, begindate, overdate, uid, reviewstate, descript
+  </sql>
+  <select id="selectByExample" parameterType="com.data.dormitory.mbg.model.LeaveExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from leave
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from leave
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from leave
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.data.dormitory.mbg.model.LeaveExample">
+    delete from leave
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.data.dormitory.mbg.model.Leave">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into leave (bid, did, bbid, kind,
+      begindate, overdate, uid,
+      reviewstate, descript)
+    values (#{bid,jdbcType=TINYINT}, #{did,jdbcType=TINYINT}, #{bbid,jdbcType=BIT}, #{kind,jdbcType=BIT},
+      #{begindate,jdbcType=TIMESTAMP}, #{overdate,jdbcType=TIMESTAMP}, #{uid,jdbcType=CHAR},
+      #{reviewstate,jdbcType=BIT}, #{descript,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.data.dormitory.mbg.model.Leave">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into leave
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bid != null">
+        bid,
+      </if>
+      <if test="did != null">
+        did,
+      </if>
+      <if test="bbid != null">
+        bbid,
+      </if>
+      <if test="kind != null">
+        kind,
+      </if>
+      <if test="begindate != null">
+        begindate,
+      </if>
+      <if test="overdate != null">
+        overdate,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="reviewstate != null">
+        reviewstate,
+      </if>
+      <if test="descript != null">
+        descript,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bid != null">
+        #{bid,jdbcType=TINYINT},
+      </if>
+      <if test="did != null">
+        #{did,jdbcType=TINYINT},
+      </if>
+      <if test="bbid != null">
+        #{bbid,jdbcType=BIT},
+      </if>
+      <if test="kind != null">
+        #{kind,jdbcType=BIT},
+      </if>
+      <if test="begindate != null">
+        #{begindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="overdate != null">
+        #{overdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=CHAR},
+      </if>
+      <if test="reviewstate != null">
+        #{reviewstate,jdbcType=BIT},
+      </if>
+      <if test="descript != null">
+        #{descript,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.data.dormitory.mbg.model.LeaveExample" resultType="java.lang.Integer">
+    select count(*) from leave
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update leave
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.bid != null">
+        bid = #{record.bid,jdbcType=TINYINT},
+      </if>
+      <if test="record.did != null">
+        did = #{record.did,jdbcType=TINYINT},
+      </if>
+      <if test="record.bbid != null">
+        bbid = #{record.bbid,jdbcType=BIT},
+      </if>
+      <if test="record.kind != null">
+        kind = #{record.kind,jdbcType=BIT},
+      </if>
+      <if test="record.begindate != null">
+        begindate = #{record.begindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.overdate != null">
+        overdate = #{record.overdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=CHAR},
+      </if>
+      <if test="record.reviewstate != null">
+        reviewstate = #{record.reviewstate,jdbcType=BIT},
+      </if>
+      <if test="record.descript != null">
+        descript = #{record.descript,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update leave
+    set id = #{record.id,jdbcType=INTEGER},
+      bid = #{record.bid,jdbcType=TINYINT},
+      did = #{record.did,jdbcType=TINYINT},
+      bbid = #{record.bbid,jdbcType=BIT},
+      kind = #{record.kind,jdbcType=BIT},
+      begindate = #{record.begindate,jdbcType=TIMESTAMP},
+      overdate = #{record.overdate,jdbcType=TIMESTAMP},
+      uid = #{record.uid,jdbcType=CHAR},
+      reviewstate = #{record.reviewstate,jdbcType=BIT},
+      descript = #{record.descript,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.data.dormitory.mbg.model.Leave">
+    update leave
+    <set>
+      <if test="bid != null">
+        bid = #{bid,jdbcType=TINYINT},
+      </if>
+      <if test="did != null">
+        did = #{did,jdbcType=TINYINT},
+      </if>
+      <if test="bbid != null">
+        bbid = #{bbid,jdbcType=BIT},
+      </if>
+      <if test="kind != null">
+        kind = #{kind,jdbcType=BIT},
+      </if>
+      <if test="begindate != null">
+        begindate = #{begindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="overdate != null">
+        overdate = #{overdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=CHAR},
+      </if>
+      <if test="reviewstate != null">
+        reviewstate = #{reviewstate,jdbcType=BIT},
+      </if>
+      <if test="descript != null">
+        descript = #{descript,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.data.dormitory.mbg.model.Leave">
+    update leave
+    set bid = #{bid,jdbcType=TINYINT},
+      did = #{did,jdbcType=TINYINT},
+      bbid = #{bbid,jdbcType=BIT},
+      kind = #{kind,jdbcType=BIT},
+      begindate = #{begindate,jdbcType=TIMESTAMP},
+      overdate = #{overdate,jdbcType=TIMESTAMP},
+      uid = #{uid,jdbcType=CHAR},
+      reviewstate = #{reviewstate,jdbcType=BIT},
+      descript = #{descript,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

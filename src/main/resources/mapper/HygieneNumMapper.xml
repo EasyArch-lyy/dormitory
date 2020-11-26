@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.data.dormitory.mbg.mapper.TestLoginMapper">
-  <resultMap id="BaseResultMap" type="com.data.dormitory.mbg.model.TestLogin">
-    <id column="userid" jdbcType="INTEGER" property="userid" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="passwd" jdbcType="VARCHAR" property="passwd" />
-    <result column="rank" jdbcType="INTEGER" property="rank" />
+<mapper namespace="com.data.dormitory.mbg.mapper.HygieneNumMapper">
+  <resultMap id="BaseResultMap" type="com.data.dormitory.mbg.model.HygieneNum">
+    <id column="date" jdbcType="TIMESTAMP" property="date" />
+    <result column="bid" jdbcType="TINYINT" property="bid" />
+    <result column="did" jdbcType="TINYINT" property="did" />
+    <result column="grade" jdbcType="TINYINT" property="grade" />
+    <result column="descript" jdbcType="VARCHAR" property="descript" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,15 +67,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    userid, username, passwd, rank
+    date, bid, did, grade, descript
   </sql>
-  <select id="selectByExample" parameterType="com.data.dormitory.mbg.model.TestLoginExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.data.dormitory.mbg.model.HygieneNumExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from test_login
+    from hygiene_num
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -82,79 +83,88 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.util.Date" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from test_login
-    where userid = #{userid,jdbcType=INTEGER}
+    from hygiene_num
+    where date = #{date,jdbcType=TIMESTAMP}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from test_login
-    where userid = #{userid,jdbcType=INTEGER}
+  <delete id="deleteByPrimaryKey" parameterType="java.util.Date">
+    delete from hygiene_num
+    where date = #{date,jdbcType=TIMESTAMP}
   </delete>
-  <delete id="deleteByExample" parameterType="com.data.dormitory.mbg.model.TestLoginExample">
-    delete from test_login
+  <delete id="deleteByExample" parameterType="com.data.dormitory.mbg.model.HygieneNumExample">
+    delete from hygiene_num
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.data.dormitory.mbg.model.TestLogin">
-    insert into test_login (userid, username, passwd,
-      rank)
-    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR},
-      #{rank,jdbcType=INTEGER})
+  <insert id="insert" parameterType="com.data.dormitory.mbg.model.HygieneNum">
+    insert into hygiene_num (date, bid, did,
+      grade, descript)
+    values (#{date,jdbcType=TIMESTAMP}, #{bid,jdbcType=TINYINT}, #{did,jdbcType=TINYINT},
+      #{grade,jdbcType=TINYINT}, #{descript,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.data.dormitory.mbg.model.TestLogin">
-    insert into test_login
+  <insert id="insertSelective" parameterType="com.data.dormitory.mbg.model.HygieneNum">
+    insert into hygiene_num
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="userid != null">
-        userid,
+      <if test="date != null">
+        date,
       </if>
-      <if test="username != null">
-        username,
+      <if test="bid != null">
+        bid,
       </if>
-      <if test="passwd != null">
-        passwd,
+      <if test="did != null">
+        did,
       </if>
-      <if test="rank != null">
-        rank,
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="descript != null">
+        descript,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="userid != null">
-        #{userid,jdbcType=INTEGER},
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
       </if>
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
+      <if test="bid != null">
+        #{bid,jdbcType=TINYINT},
       </if>
-      <if test="passwd != null">
-        #{passwd,jdbcType=VARCHAR},
+      <if test="did != null">
+        #{did,jdbcType=TINYINT},
       </if>
-      <if test="rank != null">
-        #{rank,jdbcType=INTEGER},
+      <if test="grade != null">
+        #{grade,jdbcType=TINYINT},
+      </if>
+      <if test="descript != null">
+        #{descript,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.data.dormitory.mbg.model.TestLoginExample" resultType="java.lang.Integer">
-    select count(*) from test_login
+  <select id="countByExample" parameterType="com.data.dormitory.mbg.model.HygieneNumExample" resultType="java.lang.Integer">
+    select count(*) from hygiene_num
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update test_login
+    update hygiene_num
     <set>
-      <if test="record.userid != null">
-        userid = #{record.userid,jdbcType=INTEGER},
+      <if test="record.date != null">
+        date = #{record.date,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.username != null">
-        username = #{record.username,jdbcType=VARCHAR},
+      <if test="record.bid != null">
+        bid = #{record.bid,jdbcType=TINYINT},
       </if>
-      <if test="record.passwd != null">
-        passwd = #{record.passwd,jdbcType=VARCHAR},
+      <if test="record.did != null">
+        did = #{record.did,jdbcType=TINYINT},
       </if>
-      <if test="record.rank != null">
-        rank = #{record.rank,jdbcType=INTEGER},
+      <if test="record.grade != null">
+        grade = #{record.grade,jdbcType=TINYINT},
+      </if>
+      <if test="record.descript != null">
+        descript = #{record.descript,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -162,35 +172,40 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update test_login
-    set userid = #{record.userid,jdbcType=INTEGER},
-      username = #{record.username,jdbcType=VARCHAR},
-      passwd = #{record.passwd,jdbcType=VARCHAR},
-      rank = #{record.rank,jdbcType=INTEGER}
+    update hygiene_num
+    set date = #{record.date,jdbcType=TIMESTAMP},
+      bid = #{record.bid,jdbcType=TINYINT},
+      did = #{record.did,jdbcType=TINYINT},
+      grade = #{record.grade,jdbcType=TINYINT},
+      descript = #{record.descript,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.data.dormitory.mbg.model.TestLogin">
-    update test_login
+  <update id="updateByPrimaryKeySelective" parameterType="com.data.dormitory.mbg.model.HygieneNum">
+    update hygiene_num
     <set>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
+      <if test="bid != null">
+        bid = #{bid,jdbcType=TINYINT},
       </if>
-      <if test="passwd != null">
-        passwd = #{passwd,jdbcType=VARCHAR},
+      <if test="did != null">
+        did = #{did,jdbcType=TINYINT},
       </if>
-      <if test="rank != null">
-        rank = #{rank,jdbcType=INTEGER},
+      <if test="grade != null">
+        grade = #{grade,jdbcType=TINYINT},
+      </if>
+      <if test="descript != null">
+        descript = #{descript,jdbcType=VARCHAR},
       </if>
     </set>
-    where userid = #{userid,jdbcType=INTEGER}
+    where date = #{date,jdbcType=TIMESTAMP}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.data.dormitory.mbg.model.TestLogin">
-    update test_login
-    set username = #{username,jdbcType=VARCHAR},
-      passwd = #{passwd,jdbcType=VARCHAR},
-      rank = #{rank,jdbcType=INTEGER}
-    where userid = #{userid,jdbcType=INTEGER}
+  <update id="updateByPrimaryKey" parameterType="com.data.dormitory.mbg.model.HygieneNum">
+    update hygiene_num
+    set bid = #{bid,jdbcType=TINYINT},
+      did = #{did,jdbcType=TINYINT},
+      grade = #{grade,jdbcType=TINYINT},
+      descript = #{descript,jdbcType=VARCHAR}
+    where date = #{date,jdbcType=TIMESTAMP}
   </update>
 </mapper>
