@@ -5,7 +5,6 @@ import com.data.dormitory.mbg.mapper.StuMapper;
 import com.data.dormitory.mbg.mapper.TestLoginMapper;
 import com.data.dormitory.mbg.model.BedSid;
 import com.data.dormitory.mbg.model.Stu;
-import com.data.dormitory.mbg.model.TestLogin;
 import com.data.dormitory.service.StudentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,15 +24,21 @@ public class StudentServiceImpl implements StudentService {
 
     private static Logger LOGGER = LoggerFactory.getLogger(StudentServiceImpl.class);
 
-    public TestLogin getUserById(Integer userId) {
-
-        return testLoginMapper.selectByPrimaryKey(userId);
+    public Stu getUserById(String userId) {
+        return stuMapper.selectByPrimaryKey(userId);
     }
 
-    public boolean getLogin(Integer userId, String passwd) {
+    public Stu getLogin(String userId, String passwd) {
 
-        TestLogin testLogin = testLoginMapper.selectByPrimaryKey(userId);
-        return testLogin.getPasswd().equals(passwd);
+        Stu stuLogin = stuMapper.selectByPrimaryKey(userId);
+        if (stuLogin == null) {
+            return stuLogin;
+        } else {
+            if (stuLogin.getSpasswd().equals(passwd)) {
+                return stuLogin;
+            }
+        }
+        return new Stu();
     }
 
     @Override

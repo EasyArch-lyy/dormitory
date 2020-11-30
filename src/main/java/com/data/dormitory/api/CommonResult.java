@@ -1,4 +1,4 @@
-package com.data.dormitory.api;
+package com.data.dormitory.mbg.api;
 
 /**
  * 通用返回对象

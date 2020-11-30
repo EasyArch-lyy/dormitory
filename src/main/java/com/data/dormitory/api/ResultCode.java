@@ -1,4 +1,4 @@
-package com.data.dormitory.api;
+package com.data.dormitory.mbg.api;
 
 /**
  * 枚举了一些常用API操作码

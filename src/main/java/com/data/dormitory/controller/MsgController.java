@@ -30,6 +30,7 @@ public class MsgController {
     /**
      * 学生违纪信息填入
      */
+    @ApiOperation("学生违纪信息填入")
     @RequestMapping(value = "/addPunish", method = RequestMethod.POST)
     public CommonResult addPunish(@RequestBody Punish punish) {
 

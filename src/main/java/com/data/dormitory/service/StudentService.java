@@ -6,9 +6,9 @@ import com.data.dormitory.mbg.model.TestLogin;
 
 public interface StudentService {
 
-    TestLogin getUserById(Integer userId);
+    Stu getUserById(String userId);
 
-    boolean getLogin(Integer userId, String passwd);
+    Stu getLogin(String userId, String passwd);
 
     BedSid getBedId(String sid);
 

@@ -36,7 +36,7 @@ public class StudentController {
      */
     @ApiOperation("根据学号获取学生")
     @RequestMapping(value = "/getUserById", method = RequestMethod.GET)
-    public TestLogin getUser(@RequestParam("userId") Integer userId) {
+    public Stu getUser(@RequestParam("userId") String userId) {
 
         LOGGER.info("getUser() 调用");
         return studentService.getUserById(userId);
@@ -46,12 +46,18 @@ public class StudentController {
      * 验证用户登录
      */
     @ApiOperation("验证学生登录")
-    @RequestMapping(value = "/getLogin", method = RequestMethod.GET)
-    public boolean getLogin(@RequestParam("userId") Integer userId,
-                            @RequestParam("passwd") String passwd) {
+    @RequestMapping(value = "/getLogin", method = RequestMethod.POST)
+    public CommonResult getLogin(@RequestBody Stu stu) {
 
         LOGGER.info("getLogin() 调用");
-        return studentService.getLogin(userId, passwd);
+        stu = studentService.getLogin(stu.getSid(), stu.getSpasswd());
+        if (stu == null) {
+            LOGGER.error("验证失败");
+            return CommonResult.failed();
+        } else {
+            LOGGER.info("验证成功");
+            return CommonResult.success(stu);
+        }
     }
 
     /**
