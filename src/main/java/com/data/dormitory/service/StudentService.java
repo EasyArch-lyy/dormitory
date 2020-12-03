@@ -2,11 +2,10 @@ package com.data.dormitory.service;
 
 import com.data.dormitory.mbg.model.BedSid;
 import com.data.dormitory.mbg.model.Stu;
-import com.data.dormitory.mbg.model.TestLogin;
 
 public interface StudentService {
 
-    Stu getUserById(String userId);
+    Stu getStuById(String userId);
 
     Stu getLogin(String userId, String passwd);
 

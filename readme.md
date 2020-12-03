@@ -1,8 +1,17 @@
 mbg -------mybatis生成 \
 logs  按日期存放info.log   error.log
 
+业务流程：
 
-数据表  
+
+学生提交申请出校表  -->  提交辅导员
+
+辅导员审批         <-   审批结果反馈学生              
+
+系统查宿流程-----------
+超时禁止申请 、 审批超时
+
+##数据表  
 
 ######床位和学号对应表·bed_sid
 
@@ -34,6 +43,11 @@ char(20)|int(2)|int(3)|int(4)|int(2)|char(10)|varchar(50)|char(20)|int(1)
 `aid`工号|`bid`楼号|`aname`姓名|`apasswd`登录密码|`aphone`phone|`rank`权限|
 ----|----|----|----|----|----|
 char(20)|int(1)|char(10)|char(20)|char(20)|int(1)|
+
+######短时离校请假表 ·askliveshort
+`timestamp`当前时间戳|`sid`学号|`bid`宿舍楼号|`dormitory`宿舍号|`bbid`学生床位号|`aplykind`请假类型(晚归、不归|`reason`理由|`datestart`开始时间戳|`dataend`结束时间戳|`assign`审批人|`asssignstate`审批状态
+----|----|----|----|----|----|----|----|----|----|----|
+timestamp|char(11)|
 
 
 权限rank  1学生,2宿管,3管理层,4辅导员,sys系统维护账号

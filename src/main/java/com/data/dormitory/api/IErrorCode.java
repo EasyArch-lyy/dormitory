@@ -1,4 +1,4 @@
-package com.data.dormitory.mbg.api;
+package com.data.dormitory.api;
 
 /**
  * 封装API的错误码

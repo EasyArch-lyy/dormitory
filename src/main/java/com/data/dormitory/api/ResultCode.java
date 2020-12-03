@@ -1,4 +1,6 @@
-package com.data.dormitory.mbg.api;
+package com.data.dormitory.api;
+
+import com.data.dormitory.api.IErrorCode;
 
 /**
  * 枚举了一些常用API操作码

@@ -14,17 +14,14 @@ import org.springframework.stereotype.Service;
 @Service("studentService")
 public class StudentServiceImpl implements StudentService {
 
-    @Autowired
-    private TestLoginMapper testLoginMapper;
+    private static Logger LOGGER = LoggerFactory.getLogger(StudentServiceImpl.class);
+
     @Autowired
     private BedSidMapper bedSidMapper;
     @Autowired
     private StuMapper stuMapper;
 
-
-    private static Logger LOGGER = LoggerFactory.getLogger(StudentServiceImpl.class);
-
-    public Stu getUserById(String userId) {
+    public Stu getStuById(String userId) {
         return stuMapper.selectByPrimaryKey(userId);
     }
 

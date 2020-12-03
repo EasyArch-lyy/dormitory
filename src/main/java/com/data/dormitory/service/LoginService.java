@@ -1,6 +1,6 @@
 package com.data.dormitory.service;
 
-import com.data.dormitory.dto.LoginDto;
+import com.data.dormitory.dto.returnmsg.LoginDto;
 
 public interface LoginService {
 

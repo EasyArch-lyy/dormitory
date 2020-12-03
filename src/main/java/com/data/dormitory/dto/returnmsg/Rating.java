@@ -1,7 +1,9 @@
-package com.data.dormitory.dto;
+package com.data.dormitory.dto.returnmsg;
 
 import java.util.HashMap;
-
+/**
+ * 等级枚举
+ */
 public enum Rating {
     STU("学生",1),
     AUNT("宿管",2),

@@ -1,7 +1,9 @@
-package com.data.dormitory.dto;
+package com.data.dormitory.dto.returnmsg;
 
 import java.util.HashMap;
-
+/**
+ * 性别枚举类
+ */
 public enum Gender {
     MALE("男", 1), FAMALE("女", 2);
     private String key;

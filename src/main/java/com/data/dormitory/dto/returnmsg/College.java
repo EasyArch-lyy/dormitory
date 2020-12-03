@@ -1,7 +1,9 @@
-package com.data.dormitory.dto;
+package com.data.dormitory.dto.returnmsg;
 
 import java.util.HashMap;
-
+/**
+ * 学院枚举类
+ */
 public enum College {
 
     TECHNOLOGY("机械", 1),SOFTWARE("软件", 2),HOTEL("网络", 3);

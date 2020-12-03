@@ -35,11 +35,11 @@ public class StudentController {
      * 根据id获取用户
      */
     @ApiOperation("根据学号获取学生")
-    @RequestMapping(value = "/getUserById", method = RequestMethod.GET)
-    public Stu getUser(@RequestParam("userId") String userId) {
+    @RequestMapping(value = "/getStuById", method = RequestMethod.GET)
+    public Stu getStuById(@RequestParam("userId") String userId) {
 
         LOGGER.info("getUser() 调用");
-        return studentService.getUserById(userId);
+        return studentService.getStuById(userId);
     }
 
     /**

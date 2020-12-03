@@ -1,9 +1,11 @@
-package com.data.dormitory.dto;
+package com.data.dormitory.dto.returnmsg;
 
 import java.util.HashMap;
-
+/**
+ * 专业枚举
+ */
 public enum Subject {
-    TECHNOLOGY("计算机", 1), SOFTWARE("软件", 2), NETWORK("网络", 3),;
+    TECHNOLOGY("计算机", 1), SOFTWARE("软件", 2), NETWORK("网络", 3),EDUCATION("教技",4);
     private String key;
     private Integer value;
     private Subject(String key, Integer value) {

@@ -1,4 +1,4 @@
-package com.data.dormitory.mbg.api;
+package com.data.dormitory.api;
 
 import com.github.pagehelper.PageInfo;
 

@@ -1,4 +1,4 @@
-package com.data.dormitory.dto;
+package com.data.dormitory.dto.returnmsg;
 /**
  * 登录类
  */
