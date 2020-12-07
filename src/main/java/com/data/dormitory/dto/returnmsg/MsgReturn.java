@@ -1,6 +1,7 @@
 package com.data.dormitory.dto.returnmsg;
 
 import com.data.dormitory.mbg.model.Aunt;
+import com.data.dormitory.mbg.model.Rearteach;
 import com.data.dormitory.mbg.model.Stu;
 
 /**
@@ -8,9 +9,13 @@ import com.data.dormitory.mbg.model.Stu;
  */
 public class MsgReturn {
 
-
+    /**学生身份信息*/
     private Stu stu;
+    /**宿管身份信息*/
     private Aunt aunt;
+    /**后勤身份信息*/
+    private Rearteach rearteach;
+//    private
     /**
      * 学院
      */
@@ -53,6 +58,10 @@ public class MsgReturn {
                 this.rank = rank;
                 break;
             case 3:
+                this.rearteach = (Rearteach) obj;
+                this.rating = Rating.getByValue(rearteach.getRank());
+                this.gender = Gender.getByValue(rearteach.getSex());
+                this.rank = rank;
                 break;
             case 4:
                 break;

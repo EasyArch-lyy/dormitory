@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/studentController")
-@Api(tags = "StudentController", description = "学生信息")
+@Api(tags = "studentController", description = "学生信息")
 /**
  * 学生信息访问类
  */

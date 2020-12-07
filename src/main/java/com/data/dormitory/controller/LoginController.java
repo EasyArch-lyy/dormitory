@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = "loginController", description = "用户登录类")
 @RestController
-@RequestMapping("/api/login")
+@RequestMapping("/login")
 public class LoginController {
 
     private static Logger LOGGER = LoggerFactory.getLogger(LoginController.class);

@@ -36,8 +36,8 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.data.dormitory.mbg.mapper"
                              targetProject="src\main\java"/>
         <!--生成全部表tableName设为%-->
-        <table tableName="%">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        <table tableName="askliveshort">
+            <generatedKey column="currstamp" sqlStatement="MySql" identity="true"/>
         </table>
     </context>
 </generatorConfiguration>

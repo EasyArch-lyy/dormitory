@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Api(tags = "msgController", description = "扣分及违纪记录登记")
-@RequestMapping("msgController")
+@RequestMapping("/msgController")
 public class MsgController {
 
     private static Logger LOGGER = LoggerFactory.getLogger(MsgController.class);

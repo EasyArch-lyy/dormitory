@@ -4,7 +4,7 @@ import com.data.dormitory.mbg.model.Aunt;
 
 public interface AuntService {
 
-    Aunt getAuntById(String userId);
+    Aunt getAuntById(String aid);
 
 }
 

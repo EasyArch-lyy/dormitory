@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auntController")
-@Api(tags = "AuntController", description = "宿管信息")
+@Api(tags = "auntController", description = "宿管信息")
 public class AuntController {
 
     private static Logger LOGGER = LoggerFactory.getLogger(AuntController.class);
@@ -25,9 +25,9 @@ public class AuntController {
      * 根据id获取宿管
      */
     @RequestMapping(value = "/getAuntById",method = RequestMethod.GET)
-    public Aunt getAuntById(@RequestParam("userId") String userId) {
+    public Aunt getAuntById(@RequestParam("aid") String aid) {
 
         LOGGER.info("getAuntById() 调用");
-        return auntService.getAuntById(userId);
+        return auntService.getAuntById(aid);
     }
 }
