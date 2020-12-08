@@ -1,6 +1,7 @@
 package com.data.dormitory.dto.returnmsg;
 
 import com.data.dormitory.mbg.model.Aunt;
+import com.data.dormitory.mbg.model.Instructor;
 import com.data.dormitory.mbg.model.Rearteach;
 import com.data.dormitory.mbg.model.Stu;
 
@@ -15,7 +16,10 @@ public class MsgReturn {
     private Aunt aunt;
     /**后勤身份信息*/
     private Rearteach rearteach;
-//    private
+    /**辅导员身份信息*/
+    private Instructor instructor;
+    /**系统用户信息*/
+//    private Sys
     /**
      * 学院
      */
@@ -37,6 +41,8 @@ public class MsgReturn {
      */
     private Integer rank;
 
+    private String signature;
+
     /**
      * 构造方法中判断
      * 返回值描述：
@@ -51,19 +57,27 @@ public class MsgReturn {
                 this.gender = Gender.getByValue(stu.getSex());
                 this.rating = Rating.getByValue(stu.getRank());
                 this.rank = rank;
+                this.signature = stu.getSid();
                 break;
             case 2:
                 this.aunt = (Aunt) obj;
                 this.rating = Rating.getByValue(aunt.getRank());
                 this.rank = rank;
+                this.signature = aunt.getAid();
                 break;
             case 3:
                 this.rearteach = (Rearteach) obj;
                 this.rating = Rating.getByValue(rearteach.getRank());
                 this.gender = Gender.getByValue(rearteach.getSex());
                 this.rank = rank;
+                this.signature = rearteach.getTid();
                 break;
             case 4:
+                this.instructor = (Instructor) obj;
+                this.rating = Rating.getByValue(instructor.getRank());
+                this.gender = Gender.getByValue(instructor.getSex());
+                this.signature = instructor.getIid();
+                this.rank = rank;
                 break;
             case 5:
                 break;
@@ -96,5 +110,13 @@ public class MsgReturn {
 
     public Integer getRank() {
         return rank;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 }

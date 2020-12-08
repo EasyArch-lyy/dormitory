@@ -2,7 +2,12 @@ package com.data.dormitory.service.impl;
 
 import com.data.dormitory.mbg.mapper.AskliveshortMapper;
 import com.data.dormitory.mbg.model.Askliveshort;
+import com.data.dormitory.mbg.model.Instructor;
+import com.data.dormitory.mbg.model.Stu;
 import com.data.dormitory.service.ApplyService;
+import com.data.dormitory.service.InstructorService;
+import com.data.dormitory.service.LoginService;
+import com.data.dormitory.service.StudentService;
 import com.data.dormitory.util.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +23,12 @@ public class ApplyServiceImpl implements ApplyService {
 
     @Autowired
     private AskliveshortMapper askliveshortMapper;
+    @Autowired
+    private StudentService studentService;
+    @Autowired
+    private InstructorService instructorService;
+    @Autowired
+    private LoginService loginService;
 
     @Override
     public String[] aplyLeave(Askliveshort askliveshort) throws ParseException {
@@ -30,7 +41,8 @@ public class ApplyServiceImpl implements ApplyService {
         } else {
             b= "请假当天超过10点不允许提交外出请假";
         }
-        // todo 提交后给关联辅导员发消息
+        // todo 给关联辅导员发消息
+        noticeApprove(askliveshort.getSid());
         return new String[]{a, b};
     }
 
@@ -51,6 +63,20 @@ public class ApplyServiceImpl implements ApplyService {
         } else {
             LOGGER.info("申请请假日期不为当天");
             return true;
+        }
+    }
+
+    /**
+     * 通知对应辅导员审批
+     */
+    public void noticeApprove(String sid) {
+        Stu s = studentService.getStuById(sid);
+        Instructor instructor = instructorService.getInstructorByMGid(s.getMid(), s.getGid());
+        if (loginService.getInstructorOnLine(instructor.getIid())) {
+            LOGGER.info("该辅导员离线，进入离线流程");
+            // todo 将审批信息存入redis，以<key:iid,value List<Askliveshort>>形式存储
+        } else {
+            LOGGER.info("该辅导员在线已发起通知");
         }
     }
 }

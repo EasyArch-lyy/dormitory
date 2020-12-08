@@ -10,7 +10,7 @@
         WHERE b.bbid = #{bbid}
           AND b.bid = #{bid}
           AND b.did = #{did}
-          AND s.sid = b.sid;
+          AND s.sid = b.sid
 
     </select>
 

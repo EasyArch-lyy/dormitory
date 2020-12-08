@@ -11,3 +11,14 @@ spring:
     url: jdbc:mysql://39.100.149.36:3306/dormitory?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456a
+
+  redis:
+    host: 39.100.149.36
+    port: 6379
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+    timeout: 30000

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
 import java.util.HashMap;
 
 /**
@@ -31,7 +32,7 @@ public class ApplyController {
      * 提交请假申请
      */
     @RequestMapping(value = "/aplyLeave", method = RequestMethod.POST)
-    public CommonResult aplyLeave(@RequestBody Askliveshort askliveshort) {
+    public CommonResult aplyLeave(@RequestBody Askliveshort askliveshort) throws ParseException {
 
         String[] msg = applyService.aplyLeave(askliveshort);
         if (msg[0].equals(1)) {

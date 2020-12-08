@@ -53,6 +53,9 @@ public class Tools {
         return calendar;
     }
 
+    /**
+     * 获取当前HttpSession
+     */
 ////方法 二
 //Calendar.getInstance().getTimeInMillis();
 ////方法 三

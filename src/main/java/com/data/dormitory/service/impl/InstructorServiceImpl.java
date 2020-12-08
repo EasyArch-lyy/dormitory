@@ -18,4 +18,10 @@ public class InstructorServiceImpl implements InstructorService {
     public Instructor getInstructorById(String iid) {
         return instructorMapper.selectByPrimaryKey(iid);
     }
+
+    @Override
+    public Instructor getInstructorByMGid(Integer mid, Integer gid) {
+
+        return instructorMapper.selectByMidGid(mid, gid);
+    }
 }
