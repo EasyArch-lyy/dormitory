@@ -63,7 +63,7 @@ public class InstructorController {
      *
      * @param iid 辅导员工号
      */
-    @ApiOperation("获取相关申请")
+    @ApiOperation("取出申请的离线消息")
     @RequestMapping(value = "/getApply", method = RequestMethod.GET)
     public List<Object> getApplys(@RequestParam(value = "iid") String iid) {
 
@@ -71,12 +71,12 @@ public class InstructorController {
     }
 
     /**
-     * 辅导员对申请操作
+     * 辅导员对申请操作(后台接收前端处理方式)
      *
      * @param id      处理的申请id
      * @param operate 对申请的处理
      */
-    @ApiOperation("辅导员对申请操作")
+    @ApiOperation("辅导员处理单条申请")
     @RequestMapping(value = "/operateApply", method = RequestMethod.GET)
     public boolean operateApply(@RequestParam(value = "id") Integer id,
                                 @RequestParam(value = "operate") boolean operate) {

@@ -9,4 +9,11 @@
           AND gid = #{gid}
 
     </select>
+
+    <select id="selectInstructByPhone" parameterType="java.lang.String" resultType="com.data.dormitory.mbg.model.Instructor">
+        SELECT *
+        FROM instructor
+        WHERE iphone = #{phone}
+
+    </select>
 </mapper>

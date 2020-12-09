@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 public class UserOnLineController {
 
     private static Logger LOGGER = LoggerFactory.getLogger(UserOnLineController.class);
-// 特征码
+
 //    @RequestMapping(value = "/addOnlineSession")
 //    public String addOnlineSession(HttpServletRequest request, @RequestParam String name, @RequestParam String pwd) {
 //

@@ -3,6 +3,8 @@ logs  按日期存放info.log   error.log
 
 业务流程：
 
+申请离校流程: 在线消息  --> webSocket 传输
+            离线消息  --> redis缓存<key,value(List<?>)>
 
 学生提交申请出校表  -->  提交辅导员
 

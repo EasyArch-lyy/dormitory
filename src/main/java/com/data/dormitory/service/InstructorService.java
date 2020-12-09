@@ -9,6 +9,8 @@ public interface InstructorService {
 
     Instructor getInstructorById(String iid);
 
+    Instructor getInstructByPhone(String phone);
+
     Instructor getInstructorByMGid(Integer mid, Integer gid);
 
     List<Object> getApply(String iid);

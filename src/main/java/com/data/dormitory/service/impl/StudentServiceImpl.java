@@ -48,4 +48,9 @@ public class StudentServiceImpl implements StudentService {
         return stuMapper.getStuByNum(bid, did, bbid);
     }
 
+    @Override
+    public Stu getStuByPhone(String phone) {
+        return stuMapper.getStuByPhone(phone);
+    }
+
 }

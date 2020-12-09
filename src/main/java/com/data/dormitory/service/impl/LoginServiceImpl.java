@@ -1,7 +1,7 @@
 package com.data.dormitory.service.impl;
 
 import com.data.dormitory.dto.returnmsg.LoginDto;
-import com.data.dormitory.dto.returnmsg.MsgReturn;
+import com.data.dormitory.dto.returnmsg.MsgReturnDto;
 import com.data.dormitory.mbg.model.Aunt;
 import com.data.dormitory.mbg.model.Instructor;
 import com.data.dormitory.mbg.model.Rearteach;
@@ -36,7 +36,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public Object login(LoginDto loginDto) {
-        MsgReturn msgReturn = null;
+        MsgReturnDto msgReturnDto = null;
         switch (loginDto.getRank()) {
             // 学生登录
             case 1:
@@ -44,7 +44,7 @@ public class LoginServiceImpl implements LoginService {
                 stu = studentService.getStuById(loginDto.getUserName());
                 if (stu != null) {
                     if (stu.getSpasswd().equals(loginDto.getPassword())) {
-                        msgReturn = new MsgReturn(loginDto.getRank(), stu);
+                        msgReturnDto = new MsgReturnDto(loginDto.getRank(), stu);
                     }
                 }
                 break;
@@ -54,7 +54,7 @@ public class LoginServiceImpl implements LoginService {
                 aunt = auntService.getAuntById(loginDto.getUserName());
                 if(aunt != null){
                     if (aunt.getApasswd().equals(loginDto.getPassword())) {
-                        msgReturn = new MsgReturn(loginDto.getRank(), aunt);
+                        msgReturnDto = new MsgReturnDto(loginDto.getRank(), aunt);
                     }
                 }
                 break;
@@ -64,7 +64,7 @@ public class LoginServiceImpl implements LoginService {
                 rearteach = rearteachService.getRearById(loginDto.getUserName());
                 if (rearteach != null) {
                     if (rearteach.getTpasswd().equals(loginDto.getPassword())) {
-                        msgReturn = new MsgReturn(loginDto.getRank(), rearteach);
+                        msgReturnDto = new MsgReturnDto(loginDto.getRank(), rearteach);
                     }
                 }
                 break;
@@ -74,7 +74,7 @@ public class LoginServiceImpl implements LoginService {
                 instructor = instructorService.getInstructorById(loginDto.getUserName());
                 if (instructor != null) {
                     if (instructor.getIpasswd().equals(loginDto.getPassword())) {
-                        msgReturn = new MsgReturn(loginDto.getRank(), instructor);
+                        msgReturnDto = new MsgReturnDto(loginDto.getRank(), instructor);
                     }
                 }
                 break;
@@ -83,11 +83,11 @@ public class LoginServiceImpl implements LoginService {
                 sys = rearteachService.getRearById(loginDto.getUserName());
                 if (sys != null) {
                     if (sys.getTpasswd().equals(loginDto.getPassword())) {
-                        msgReturn = new MsgReturn(loginDto.getRank(), sys);
+                        msgReturnDto = new MsgReturnDto(loginDto.getRank(), sys);
                     }
                 }
         }
-        return msgReturn;
+        return msgReturnDto;
     }
 
     public Map<String, Object> getLoginUser(HttpServletRequest request) {
@@ -123,5 +123,17 @@ public class LoginServiceImpl implements LoginService {
         String userId = (String) request.getSession().getAttribute("nowUserSignature");
         Integer rank = (Integer) request.getSession().getAttribute("nowUserRank");
         return userId != null && rank == 4;
+    }
+
+    /**
+     * 根据手机号获取登录用户
+     */
+    public Object getUserByPhone(String phone, Integer range) {
+        switch (range) {
+            case 1:
+                return studentService.getStuByPhone(phone);
+            case 3:
+        }
+        return new Object();
     }
 }

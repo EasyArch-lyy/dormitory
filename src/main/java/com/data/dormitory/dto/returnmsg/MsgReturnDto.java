@@ -8,7 +8,7 @@ import com.data.dormitory.mbg.model.Stu;
 /**
  * 登录信息的返回值
  */
-public class MsgReturn {
+public class MsgReturnDto {
 
     /**学生身份信息*/
     private Stu stu;
@@ -48,7 +48,7 @@ public class MsgReturn {
      * 返回值描述：
      * 所属身份的类，由数据库数字转换的内容
      */
-    public MsgReturn(Integer rank, Object obj) {
+    public MsgReturnDto(Integer rank, Object obj) {
         switch (rank) {
             case 1:
                 this.stu = (Stu) obj;

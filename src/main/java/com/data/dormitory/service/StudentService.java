@@ -12,4 +12,6 @@ public interface StudentService {
     BedSid getBedId(String sid);
 
     Stu getStu(Integer bid, Integer did, Integer bbid);
+
+    Stu getStuByPhone(String phone);
 }

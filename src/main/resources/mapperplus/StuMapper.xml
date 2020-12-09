@@ -14,4 +14,12 @@
 
     </select>
 
+
+    <select id="getStuByPhone" parameterType="java.lang.String" resultType="com.data.dormitory.mbg.model.Stu">
+        SELECT *
+        FROM stu
+        where sphone = #{phone}
+
+    </select>
+
 </mapper>

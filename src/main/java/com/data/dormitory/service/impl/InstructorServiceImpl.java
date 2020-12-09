@@ -29,6 +29,11 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
+    public Instructor getInstructByPhone(String phone) {
+        return instructorMapper.selectInstructByPhone(phone);
+    }
+
+    @Override
     public Instructor getInstructorByMGid(Integer mid, Integer gid) {
 
         return instructorMapper.selectByMidGid(mid, gid);
@@ -54,5 +59,12 @@ public class InstructorServiceImpl implements InstructorService {
             askliveshortMapper.updateAsklive(id, "审批拒绝");
             return false;
         }
+    }
+
+    /**
+     * 将登录上的辅导员加入webSocket
+     */
+    public void test(){
+
     }
 }

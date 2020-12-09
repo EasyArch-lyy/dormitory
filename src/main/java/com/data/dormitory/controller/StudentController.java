@@ -43,6 +43,24 @@ public class StudentController {
     }
 
     /**
+     * 根据手机号获取学生
+     */
+    @ApiOperation("根据手机号获取学生")
+    @RequestMapping(value = "/getStuByPhone", method = RequestMethod.GET)
+    public CommonResult getStuByPhone(@RequestParam("phone")String phone){
+        LOGGER.info("getStuByPhone() 调用");
+        Stu s = studentService.getStuByPhone(phone);
+        if (s == null) {
+            LOGGER.error("请求的手机号不存在");
+            return CommonResult.failed();
+        }else {
+            LOGGER.info("请求到学生信息");
+            return CommonResult.success(s);
+        }
+    }
+
+
+    /**
      * 验证用户登录
      */
     @ApiOperation("验证学生登录")
