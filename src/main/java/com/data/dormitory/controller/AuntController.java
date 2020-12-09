@@ -3,6 +3,7 @@ package com.data.dormitory.controller;
 import com.data.dormitory.mbg.model.Aunt;
 import com.data.dormitory.service.AuntService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,15 @@ public class AuntController {
     /**
      * 根据id获取宿管
      */
+    @ApiOperation("根据id获取宿管信息")
     @RequestMapping(value = "/getAuntById",method = RequestMethod.GET)
     public Aunt getAuntById(@RequestParam("aid") String aid) {
 
         LOGGER.info("getAuntById() 调用");
         return auntService.getAuntById(aid);
     }
+
+    /**
+     * 登记宿舍卫生
+     */
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.data.dormitory.mbg.mapper.AskliveshortMapper">
+
+    <select id="selectAskliveById" parameterType="java.lang.Integer" resultType="com.data.dormitory.mbg.model.Askliveshort">
+        select *
+        from askliveshort
+        where id = #{id}
+
+    </select>
+
+    <update id="updateAsklive" >
+        update askliveshort
+        set assignstate = #{assignstate}
+        where id = #{id}
+
+    </update>
+</mapper>
+

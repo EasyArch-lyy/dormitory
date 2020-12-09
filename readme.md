@@ -11,7 +11,9 @@ logs  按日期存放info.log   error.log
 系统查宿流程-----------
 超时禁止申请 、 审批超时
 
-
+issue1:
+    启动redis时：   ./redis-server ../redis.conf &  
+    不使用redis.conf脚本导致启动回环模式
 
 ##数据表  
 

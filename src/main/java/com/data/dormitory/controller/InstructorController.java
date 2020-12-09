@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 /*
 *
@@ -55,6 +56,32 @@ public class InstructorController {
                                           @RequestParam(value = "gid") Integer gid) {
 
         return instructorService.getInstructorByMGid(mid, gid);
+    }
+
+    /**
+     * 根据辅导员id(key)从redis提取获取离线期间堆积的申请(value)
+     *
+     * @param iid 辅导员工号
+     */
+    @ApiOperation("获取相关申请")
+    @RequestMapping(value = "/getApply", method = RequestMethod.GET)
+    public List<Object> getApplys(@RequestParam(value = "iid") String iid) {
+
+        return instructorService.getApply(iid);
+    }
+
+    /**
+     * 辅导员对申请操作
+     *
+     * @param id      处理的申请id
+     * @param operate 对申请的处理
+     */
+    @ApiOperation("辅导员对申请操作")
+    @RequestMapping(value = "/operateApply", method = RequestMethod.GET)
+    public boolean operateApply(@RequestParam(value = "id") Integer id,
+                                @RequestParam(value = "operate") boolean operate) {
+
+        return instructorService.operateApply(id, operate);
     }
 
 }

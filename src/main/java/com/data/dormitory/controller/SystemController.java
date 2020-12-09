@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/systemControl")
-@Api(tags = "StudentController", description = "系统操作")
+@Api(tags = "SystemController", description = "系统操作")
 public class SystemController {
 
     private static Logger LOGGER = LoggerFactory.getLogger(SystemController.class);

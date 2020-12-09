@@ -8,11 +8,13 @@ import com.data.dormitory.service.ApplyService;
 import com.data.dormitory.service.InstructorService;
 import com.data.dormitory.service.LoginService;
 import com.data.dormitory.service.StudentService;
+import com.data.dormitory.util.RedisUtil;
 import com.data.dormitory.util.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.Calendar;
 
@@ -29,20 +31,24 @@ public class ApplyServiceImpl implements ApplyService {
     private InstructorService instructorService;
     @Autowired
     private LoginService loginService;
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Override
-    public String[] aplyLeave(Askliveshort askliveshort) throws ParseException {
+    public String[] aplyLeave(Askliveshort askliveshort, HttpServletRequest request) throws ParseException {
+
         // todo 提交筛选策略
         String a = "0";
         String b = null;
         if (appStrategy(askliveshort)) {
+
             a = String.valueOf(askliveshortMapper.insert(askliveshort));
             b = "在请假范围内允许提交";
         } else {
-            b= "请假当天超过10点不允许提交外出请假";
+            b = "请假当天超过10点不允许提交外出请假";
         }
         // todo 给关联辅导员发消息
-        noticeApprove(askliveshort.getSid());
+        noticeApprove(askliveshort.getSid(), askliveshort, request);
         return new String[]{a, b};
     }
 
@@ -69,12 +75,16 @@ public class ApplyServiceImpl implements ApplyService {
     /**
      * 通知对应辅导员审批
      */
-    public void noticeApprove(String sid) {
+    public void noticeApprove(String sid, Askliveshort askliveshort, HttpServletRequest request) {
+
         Stu s = studentService.getStuById(sid);
         Instructor instructor = instructorService.getInstructorByMGid(s.getMid(), s.getGid());
-        if (loginService.getInstructorOnLine(instructor.getIid())) {
+        if (loginService.getInstructorOnLine(request, instructor.getIid())) {
+
             LOGGER.info("该辅导员离线，进入离线流程");
-            // todo 将审批信息存入redis，以<key:iid,value List<Askliveshort>>形式存储
+            // 将审批信息存入redis，以<key:iid,value Askliveshort>形式存储
+            askliveshort.setAssignstate(1);
+            redisUtil.lSet(instructor.getIid(), askliveshort);
         } else {
             LOGGER.info("该辅导员在线已发起通知");
         }
