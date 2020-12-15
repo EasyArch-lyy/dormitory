@@ -1,6 +1,7 @@
 package com.data.dormitory.service;
 
 import com.data.dormitory.mbg.model.Askliveshort;
+import com.data.dormitory.mbg.model.Instructor;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,4 +12,5 @@ public interface ApplyService {
 
     String[] aplyLeave(Askliveshort askliveshort, HttpServletRequest request) throws ParseException;
 
+    void neticeOffline(Integer iid, Askliveshort askliveshort);
 }

@@ -1,5 +1,7 @@
 package com.data.dormitory.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,6 +54,28 @@ public class Tools {
         calendar.setTime(d);
         return calendar;
     }
+
+    /**
+     * 直接从json中提取字段的值
+     *
+     * @param json  json字符串
+     * @param key   json的key
+     */
+    public static String getJsonValue(String json, String key) {
+
+        JSONObject jsonObject = JSON.parseObject(json);
+        return jsonObject.getString(key);
+    }
+
+    //public class TestJson {
+    //
+    //    public static void main(String[] args){
+    //        String json0 = "{\"username\": \"周杰伦\",	\"music\": \"七里香\"}";
+    //        JSONObject jsonObject0 = JSON.parseObject(json0);
+    //        String productCode0 = jsonObject0.getString("music");
+    //        System.out.println(productCode0); //七里香
+    //    }
+    //}
 
     /**
      * 获取当前HttpSession

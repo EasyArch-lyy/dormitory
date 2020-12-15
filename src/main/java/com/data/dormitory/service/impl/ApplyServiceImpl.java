@@ -48,7 +48,9 @@ public class ApplyServiceImpl implements ApplyService {
             b = "请假当天超过10点不允许提交外出请假";
         }
         // todo 给关联辅导员发消息
-        noticeApprove(askliveshort.getSid(), askliveshort, request);
+        Stu s = studentService.getStuById(askliveshort.getSid());
+        Instructor instructor = instructorService.getInstructorByMGid(s.getMid(), s.getGid());
+        noticeApprove(instructor, askliveshort, request);
         return new String[]{a, b};
     }
 
@@ -73,19 +75,27 @@ public class ApplyServiceImpl implements ApplyService {
     }
 
     /**
+     * 不经过判断进入离线流程(判断时在线发送时转离线操作
+     */
+    public void neticeOffline(Integer iid, Askliveshort askliveshort) {
+        askliveshort.setAssignstate(1);
+        redisUtil.lSet(String.valueOf(iid), askliveshort);
+        LOGGER.info("已发送离线通知");
+    }
+
+    /**
      * 通知对应辅导员审批
      */
-    public void noticeApprove(String sid, Askliveshort askliveshort, HttpServletRequest request) {
+    public void noticeApprove(Instructor instructor, Askliveshort askliveshort, HttpServletRequest request) {
 
-        Stu s = studentService.getStuById(sid);
-        Instructor instructor = instructorService.getInstructorByMGid(s.getMid(), s.getGid());
         if (loginService.getInstructorOnLine(request, instructor.getIid())) {
-
+            // 不在线为true
             LOGGER.info("该辅导员离线，进入离线流程");
             // 将审批信息存入redis，以<key:iid,value Askliveshort>形式存储
             askliveshort.setAssignstate(1);
             redisUtil.lSet(instructor.getIid(), askliveshort);
         } else {
+            // 在线则进入webSocket流程
             LOGGER.info("该辅导员在线已发起通知");
         }
     }

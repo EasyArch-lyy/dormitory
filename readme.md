@@ -12,11 +12,7 @@ logs  按日期存放info.log   error.log
 
 系统查宿流程-----------
 超时禁止申请 、 审批超时
-
-issue1:
-    启动redis时：   ./redis-server ../redis.conf &  
-    不使用redis.conf脚本导致启动回环模式
-
+    
 ##数据表  
 
 ######床位和学号对应表·bed_sid
@@ -66,3 +62,10 @@ timestamp(6)|char(11)|int(2)|int(3)|int(1)|int(1)|varchar(500)|timestamp|timesta
 
 
 权限rank  1学生,2宿管,3管理层,4辅导员,sys系统维护账号
+
+
+issue1:
+    启动redis时：   ./redis-server ../redis.conf &  
+    不使用redis.conf脚本导致启动回环模式 \
+issue2:
+    mybatis插入时注意插入的为null，出现提示xml中param参数异常问题

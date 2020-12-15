@@ -4,15 +4,21 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.data.dormitory.dto.apply.ApplyMessageDto;
 import com.data.dormitory.dto.apply.WarningMsgDto;
+import com.data.dormitory.mbg.model.Askliveshort;
+import com.data.dormitory.service.ApplyService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javax.websocket.OnClose;
+import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
+import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.HashMap;
@@ -23,6 +29,9 @@ import java.util.concurrent.CopyOnWriteArraySet;
 @ServerEndpoint("/webSocket")
 @Slf4j
 public class WebSocket {
+
+    @Autowired
+    private ApplyService applyService;
 
     private static Logger LOGGER = LoggerFactory.getLogger(WebSocket.class);
     private Session session;
@@ -40,29 +49,43 @@ public class WebSocket {
     private static CopyOnWriteArraySet<WebSocket> webSocketSet = new CopyOnWriteArraySet<>();
 
     @OnOpen
-    public void openSocket(Session session) {
+    public void openSocket(Session session, @PathParam("userName") String userName) {
+
         this.session = session;
         LOGGER.info("新的连接建立");
         // 将新用户加入数组
         webSocketSet.add(this);
+        sessionMap.put(userName, session);
         LOGGER.info("[webSocket消息]连接总数:{}", webSocketSet.size());
     }
 
     @OnClose
-    public void Onclose(){
+    public void Onclose(Session session){
         webSocketSet.remove(this);
+        for (Map.Entry<String, Session> entry : sessionMap.entrySet()) {
+            if (entry.getValue() == session) {
+                sessionMap.remove(entry.getKey());
+                LOGGER.info("辅导员{}下线",entry.getKey());
+                break;
+            }
+        }
         LOGGER.info("[webSocket消息]一条连接断开,总数:{}", webSocketSet.size());
     }
 
+    /**
+     * 服务端接受客户端消息时调用
+     */
     @OnMessage
     public void onMessage(String message, Session session) {
 
+        // todo 确定webSocket发送消息题格式
         // 推送消息到在线的辅导员
         // 协议约定：发送json消息
         // 消息类型标识。   消息收信人标识。   同类型消息列表
         // {
         //      “kind” : "1.常规晚归、离校申请",
         //      “intrustoriid” : sx-9605,
+        //      "targetUser"
         //      “ark”:
         //      {
         //          "":"",
@@ -73,27 +96,50 @@ public class WebSocket {
         //      “insturctiid” ： “”,
         //      "warning"：{}
         // }
-        LOGGER.info("[webSocket消息]收到来自客户端的消息:{}", message);
-        JSONObject jsonObject = JSON.parseObject(message);
-        int kind = Integer.parseInt(jsonObject.getString("kind"));
-        if (kind == 1) {
-            ApplyMessageDto applyMessageDto = JSON.parseObject(message, ApplyMessageDto.class);
-        } else if (kind == 2) {
-            WarningMsgDto warningMsgDto = JSON.parseObject(message, WarningMsgDto.class);
-        }
 
+        try {
+            HashMap hashMap = new ObjectMapper().readValue(message, HashMap.class);
+            Integer broadcast = (Integer) hashMap.get("broadcast");
+            Map tarUser = (Map) hashMap.get("tarUser");
+            // 判断广播和私信
+            if (broadcast == 1) {
+                privateChat(session,tarUser, hashMap);
+            } else {
+                groupChat(session, hashMap);
+            }
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage());
+        }
+//        LOGGER.info("[webSocket消息]收到来自客户端的消息:{}", message);
+//        JSONObject jsonObject = JSON.parseObject(message);
+//        int kind = Integer.parseInt(Tools.getJsonValue(message, "kind"));
+//        if (kind == 1) {
+//            ApplyMessageDto applyMessageDto = JSON.parseObject(message, ApplyMessageDto.class);
+//        } else if (kind == 2) {
+//            WarningMsgDto warningMsgDto = JSON.parseObject(message, WarningMsgDto.class);
+//        }
+
+    }
+
+    @OnError
+    public void onError(Session session, Throwable error) {
+        error.printStackTrace();
+        LOGGER.info(String.valueOf(error));
     }
 
     /**
      * 私聊
      */
     private void privateChat(Session session, Map tarUser, HashMap hashMap) throws IOException {
-        //获取目标用户的session
-        Session tarUserSession = sessionMap.get(tarUser.get("username"));
 
-        //如果不在线则发送“对方不在线”回来源用户
+        //获取目标用户的session
+        Session tarUserSession = sessionMap.get(tarUser.get("userName"));
+        //如果不在线则转入离线流程
         if (tarUserSession == null) {
-            session.getBasicRemote().sendText("{\"type\":\"0\",\"message\":\"对方不在线\"}");
+            session.getBasicRemote().sendText("{\"type\":\"0\",\"message\":\"已发送离线消息\"}");
+            // 需要将json中的消息转换为类
+            Askliveshort askliveshort = new Askliveshort();
+            applyService.neticeOffline((Integer) tarUser.get("userName"), askliveshort);
         } else {
             hashMap.put("type", "1");
             tarUserSession.getBasicRemote().sendText(new ObjectMapper().writeValueAsString(hashMap));
@@ -103,7 +149,8 @@ public class WebSocket {
     /**
      * 群聊
      */
-    private void groupChat(Session session,HashMap hashMap) throws IOException {
+    private void groupChat(Session session, HashMap hashMap) throws IOException {
+
         for (Map.Entry<String, Session> entry : sessionMap.entrySet()) {
             //自己就不用再发送消息了
             if (entry.getValue() != session) {

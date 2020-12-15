@@ -25,6 +25,16 @@ spring:
         min-idle: 0 # 连接池中的最小空闲连接
     timeout: 3000ms # 连接超时时间（毫秒）
 
+app:
+  id: dormitory
+
+apollo:
+  boostrap:
+    enable: true
+    namespaces: application,FX,apollo,applicatiom
+  meta: http://39.100.149.36:8080
+
+
 # 自定义redis key
 redis:
   key:
